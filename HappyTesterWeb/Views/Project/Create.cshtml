@@ -1,0 +1,59 @@
+﻿@using HappyTesterWeb.Data.Enum
+@using HappyTesterWeb.ViewModels
+@model CreateProjectViewModel
+
+
+<form method="post" asp-action="Create">
+
+  <div class="mb-3">
+    <label asp-for="Title" class="form-label">Title<span class="text-danger">*</span></label> 
+    <input asp-for="Title" class="form-control" placeholder="Title">
+    <span asp-validation-for="Title" class="text-danger"></span>
+  </div>
+  <div class="mb-3">
+    <label asp-for="Description" class="form-label">Description</label>
+    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+  </div>
+
+<p>
+   <a class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Create ticket
+  </a>
+ </p>
+  <div class="collapse" id="collapseExample">
+  <div class="mb-3">
+    <label asp-for="TicketTitle" class="form-label">Ticket Title<span class="text-danger">*</span></label> 
+    <input asp-for="TicketTitle" class="form-control" placeholder="Title">
+    <span asp-validation-for="TicketTitle" class="text-danger"></span>
+  </div>
+  <div class="mb-3">
+    <label asp-for="TicketDescription" class="form-label">Ticket Description</label>
+    <textarea asp-for="TicketDescription" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="TicketDescription" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+        <label asp-for="IssuePriority" class="form-label">Priority</label>                
+         <select asp-for="IssuePriority" asp-items="@Html.GetEnumSelectList<IssuePriorityEnum>()" class="form-control form-control-lg">
+        <option>--Select--</option>
+         </select>
+         <span asp-validation-for="IssuePriority" class="text-danger"></span>
+  </div>
+
+   <div class="mb-3">
+       <label asp-for="IssueType" class="form-label">Type</label>
+       <select asp-for="IssueType" asp-items="@Html.GetEnumSelectList<IssueTypeEnum>()" class="form-control form-control-lg">
+       <option>--Select--</option>
+       </select>
+  <span asp-validation-for="IssueType" class="text-danger"></span>
+  </div>
+        </div>
+
+
+  <input type="submit" value="Create Project">
+  <a asp-controller="project" asp-action="Index" class="btn btn-secondary">Back to Projects</a>
+
+</form>
+
+

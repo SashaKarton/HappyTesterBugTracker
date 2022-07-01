@@ -1,0 +1,105 @@
+﻿@using HappyTesterWeb.Data.Enum
+@model Project
+
+
+<div class="card b">
+         <div class="card-body">
+           <table class="table w-100" id="datatable1">
+            <tbody>
+               <tr>
+                  <td>
+                     <strong>Project</strong>
+                  </td>
+                  <td>@Model.Title</td> 
+               </tr>
+               <tr>
+                  <td>
+                     <strong>Description</strong>
+                  </td>
+                  <td>@Model.Description</td>
+               </tr>                       
+             </tbody>
+         </table>                    
+      </div>
+      <!-- end Aside card-->
+   </div>
+
+<div class="row">
+<div class="col-xl">
+      <div class="mb-3 d-flex">
+         <div>
+            <a asp-controller="ticket" asp-action="Create" class="btn btn-sm btn-info" type="button">New ticket</a>
+         </div>
+         <div class="ml-auto">
+            <p class="mb-0 mt-1">19 bugs / 16 issues</p>
+         </div>
+      </div>
+      <div class="card b">
+         <div class="card-body">
+            <table class="table w-100" id="datatable1">
+               <thead>
+                  <tr>
+                     <th>Type</th>
+                     <th>#ID</th>
+                     <th>Title</th>                     
+                     <th>Created</th>
+                     <th>Priority</th>
+                     <th>Asigned</th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               @foreach(var item in Model.Tickets)
+               {         string COLOR = "light";               
+               <tbody>
+                  <tr>
+                     <td>
+                        <div class="badge bg-gray-lighter">@item.IssueType</div>
+                     </td>
+                     <td>BT:@item.Id</td>
+                     <td>
+                         <a asp-controller="ticket" asp-action="Detail" asp-route-id="@item.Id" class="text-nowrap">@item.Title</a>
+                     </td>                     
+                     <td>01/01/2016</td>
+                     <td>
+                         @switch(item.IssuePriority)
+                                        {   
+                                            case IssuePriorityEnum.High:
+                                                COLOR = "danger"; break;
+
+                                            case IssuePriorityEnum.Medium:
+                                                COLOR = "warning"; break;
+
+                                            case IssuePriorityEnum.Low:
+                                                COLOR = "gray"; break;
+
+                                        }
+                        <div class="circle circle-lg bg-@COLOR" data-bs-toggle="tooltip" data-bs-placement="top" title="@item.IssuePriority"></div>
+                     </td>
+                     <td><a href="">Sylvia Daniels</a>
+                     </td>
+                     <td>
+                         @switch(item.TicketStatus)
+                                        {
+                                            case IssueStatusEnum.New:
+                                            case IssueStatusEnum.Reopened:
+                                                COLOR = "success"; break;
+
+                                            case IssueStatusEnum.Closed :
+                                                COLOR = "danger"; break;
+
+                                            case IssueStatusEnum.Assigned:
+                                            case IssueStatusEnum.Resolved:
+                                            case IssueStatusEnum.Verified:
+                                                COLOR = "warning"; break;
+                                                                                        }
+                        <div class="inline wd-xs badge badge-@COLOR">@item.TicketStatus</div>
+                     </td>
+                  </tr>
+               </tbody>
+               }
+            </table>
+         </div>
+      </div>
+   </div>
+</div>       
+</section>

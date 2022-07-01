@@ -1,0 +1,46 @@
+﻿@using HappyTesterWeb.Data.Enum
+@using HappyTesterWeb.ViewModels
+@model CreateTicketViewModel
+
+
+<form method="post" asp-action="Create">
+
+  <div class="mb-3">
+    <label asp-for="Title" class="form-label">Title<span class="text-danger">*</span></label> 
+    <input asp-for="Title" class="form-control" placeholder="Title">
+    <span asp-validation-for="Title" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Description" class="form-label">Description</label>
+    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Description" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+ <label asp-for="ProjectId" class="form-label">Project</label>
+<select asp-for="ProjectId" asp-items="@ViewBag.ProjectsList" class="form-control form-control-lg">
+        <option>--Select--</option>
+    </select>
+  </div>
+
+ 
+  <div class="mb-3">
+  <label asp-for="IssuePriority" class="form-label">Priority</label> 
+  <select asp-for="IssuePriority" asp-items="@Html.GetEnumSelectList<IssuePriorityEnum>()" class="form-control form-control-lg">
+  <option>--Select--</option>
+  </select>
+  <span asp-validation-for="IssuePriority" class="text-danger"></span>
+  </div>
+
+   <div class="mb-3">
+  <label asp-for="IssueType" class="form-label">Type</label>
+  <select asp-for="IssueType" asp-items="@Html.GetEnumSelectList<IssueTypeEnum>()" class="form-control form-control-lg">
+  <option>--Select--</option>
+  </select>
+  <span asp-validation-for="IssueType" class="text-danger"></span>
+  </div>
+
+  <input type="submit" value="Create Ticket">
+  <a asp-controller="ticket" asp-action="Index" class="btn btn-secondary">Back to Tickets</a>
+</form>

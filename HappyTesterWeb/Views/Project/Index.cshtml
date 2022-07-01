@@ -1,0 +1,176 @@
+﻿@model IEnumerable<Project>
+@{
+    ViewData["Title"] = "Index";
+}
+
+@*<a asp-controller="project" asp-action="Create" class="btn btn-outline-dark">New Project</a> 
+<table class="table table-hover">
+  <thead>
+       <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+@foreach (var item in Model)
+{
+    <tbody>
+   
+    <tr class="table-primary">
+      <th scope="row">@item.Title</th>
+      <td>@item.Description</td>
+      <td>
+       <a asp-controller="project" asp-action="Detail" asp-route-projectId="@item.Id" class="btn btn-outline-dark">Details</a> 
+      </td>   
+      <td>
+       <a asp-controller="project" asp-action="Edit" asp-route-projectId="@item.Id" class="btn">Edit</a> 
+      </td>
+      <td>
+                          <!-- Button trigger modal -->
+          <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">
+
+             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
+                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+             </svg>
+          </a> 
+         <!-- Modal -->
+         <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+         <div class="modal-content">
+         <div class="modal-header">
+            <b class="modal-title" id="deleteModalLabel">Delete project</b>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">Are you sure you want to delete "@item.Title"project with all tickets?</div>                           
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            <form method="post" asp-action="Delete" asp-route-id="@item.Id" >
+             <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+         </div>
+         </div>
+         </div>
+         </div>
+         </td>      
+    </tr>    
+  </tbody>
+}
+</table>*@
+
+<section class="section-container">
+         <div class="content-wrapper">
+            <div class="content-heading">Details</div>
+
+<div class="mb-3 d-flex">
+    <div>
+         <a asp-controller="project" asp-action="Create" class="btn btn-sm btn-info" type="button">New Project</a>
+     </div>
+</div>
+
+<div class="row">
+@foreach (var item in Model)
+{
+   <div class="col-xl-4 col-lg-6">
+      <div class="card b">
+         <div class="card-header">
+            <div class="float-right">  
+                                          <!-- Button trigger modal -->
+            <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id">
+
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
+                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                </svg>
+             </a> 
+         <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+             <div class="modal-content">
+          <div class="modal-header">
+              <b class="modal-title" id="deleteModalLabel">Delete project</b>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+             <div class="modal-body">Are you sure you want to delete "@item.Title"project with all tickets?</div>                           
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              <form method="post" asp-action="Delete" asp-route-id="@item.Id" >
+               <button type="submit" class="btn btn-danger">Delete</button>
+               </form>
+             </div>
+             </div>
+             </div>
+             </div>          
+             </div>
+
+            <h4 class="m-0">@item.Title</h4>
+            <small class="text-muted">#@item.Id</small>
+         </div>
+         <div class="card-body">
+
+         </div>
+         <table class="table">
+            <tbody>
+               <tr>
+                  <td>
+                     <strong>Description</strong>
+                  </td>
+                  <td>@item.Description</td>
+               </tr>
+               <tr>
+                  <td>
+                     <strong>Tickets</strong>
+                  </td>
+                  <td>Tickets here</td>
+               </tr>
+               <tr>
+                  <td>
+                     <strong>Start date</strong>
+                  </td>
+                  <td>01/01/2016</td>
+               </tr>
+               <tr>
+                  <td>
+                     <strong>Members</strong>
+                  </td>
+                  <td>
+                     <a class="inline" href="#">
+                        <img class="rounded-circle thumb24" src="/assets/angle/user/02-8a109a16a60ca1bfd78e1880b266ef4a6525df857fc76ec5a10d7166ba5078ea.jpg" alt="project member" />
+                     </a>
+                     <a class="inline" href="#">
+                        <img class="rounded-circle thumb24" src="/assets/angle/user/04-30572875ea483f884e565f55eb93236c23b3df72e2fb7f26fc13b18303c5dc5c.jpg" alt="project member" />
+                     </a>
+                     <a class="inline" href="#">
+                        <img class="rounded-circle thumb24" src="/assets/angle/user/05-e22682a5063e5a2eb16cd5da54987856c349c7cde3da0105a61e530a3dc11957.jpg" alt="project member" />
+                     </a>
+                     <a class="inline" href="#">
+                        <img class="rounded-circle thumb24" src="/assets/angle/user/06-5ba607c03b0d678078903e0ff90d5b114bf4b5c2250ff374ee243e1527ac06c3.jpg" alt="project member" />
+                     </a>
+                     <a class="inline" href="#">
+                        <strong>+5</strong>
+                     </a>
+                  </td>
+               </tr>
+               <tr>
+                  <td>
+                     <strong>Leader</strong>
+                  </td>
+                  <td>
+                     <a href="" data-toggle="tooltip" data-title="Team leader">
+                        <img class="rounded-circle thumb24" src="/assets/angle/user/03-6bda9faf011df695e3a8dbd1d139f732a9f01c91772bc9b7e1aed1330ca09279.jpg" alt="project member" />
+                     </a>
+                  </td>
+               </tr>
+               
+            </tbody>
+         </table>
+         <tr>
+             <td>
+             <a asp-controller="project" asp-action="Detail" asp-route-projectId="@item.Id" class="btn btn-xs btn-primary">Details</a> 
+             <a asp-controller="project" asp-action="Edit" asp-route-projectId="@item.Id" class="btn btn-xs btn-secondary">Edit</a>             
+             </td>                       
+         </tr>
+      </div>
+   </div>
+}
+        </div>
+    </div>
+</section>

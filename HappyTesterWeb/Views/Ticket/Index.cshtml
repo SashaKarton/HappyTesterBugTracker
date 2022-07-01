@@ -1,0 +1,122 @@
+﻿@using HappyTesterWeb.Data.Enum
+@model IEnumerable<Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<section class="section-container">
+         <div class="content-wrapper">
+            <div class="content-heading">Tickets</div>
+<div class="row">
+<div class="col-xl">
+      <div class="mb-3 d-flex">
+         <div>
+            <a asp-controller="ticket" asp-action="Create" class="btn btn-sm btn-info" type="button">New ticket</a>
+         </div>
+         <div class="ml-auto">
+            <p class="mb-0 mt-1">19 bugs / 16 issues</p>
+         </div>
+      </div>
+      <div class="card b">
+         <div class="card-body">
+            <table class="table w-100" id="datatable1">
+               <thead>
+                  <tr>
+                     <th>Type</th>
+                     <th>#ID</th>
+                     <th>Title</th>
+                     <th>Project</th>
+                     <th>Created</th>
+                     <th>Priority</th>
+                     <th>Asigned</th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               @foreach(var item in Model)
+               {         string COLOR = "light";               
+               <tbody>
+                  <tr>
+                     <td>
+                        <div class="badge bg-gray-lighter">@item.IssueType</div>
+                     </td>
+                     <td>BT:@item.Id</td>
+                     <td>
+                         <a asp-controller="ticket" asp-action="Detail" asp-route-id="@item.Id" class="text-nowrap">@item.Title</a>
+                     </td>                  
+                     <td>
+                         <a asp-controller="project" asp-action="Detail" asp-route-projectId="@item.Id" class="text-nowrap">@item.Project.Title</a>
+                     </td>  
+                     <td>01/01/2016</td>
+                     <td>
+                         @switch(item.IssuePriority)
+                                        {   
+                                            case IssuePriorityEnum.High:
+                                                COLOR = "danger"; break;
+
+                                            case IssuePriorityEnum.Medium:
+                                                COLOR = "warning"; break;
+
+                                            case IssuePriorityEnum.Low:
+                                                COLOR = "gray"; break;
+
+                                        }
+                        <div class="circle circle-lg bg-@COLOR" data-bs-toggle="tooltip" data-bs-placement="top" title="@item.IssuePriority"></div>
+                     </td>
+                     <td><a href="">Sylvia Daniels</a>
+                     </td>
+                     <td>
+                         @switch(item.TicketStatus)
+                                        {
+                                            case IssueStatusEnum.New:
+                                            case IssueStatusEnum.Reopened:
+                                                COLOR = "success"; break;
+
+                                            case IssueStatusEnum.Closed :
+                                                COLOR = "danger"; break;
+
+                                            case IssueStatusEnum.Assigned:
+                                            case IssueStatusEnum.Resolved:
+                                            case IssueStatusEnum.Verified:
+                                                COLOR = "warning"; break;
+                                        }
+                        <div class="inline wd-xs badge badge-@COLOR">@item.TicketStatus</div>
+                     </td>
+                     <td>                                                 
+                          <!-- Button trigger modal -->
+                          <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id" >
+
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+                             </svg>
+
+                         </a> 
+                         <!-- Modal -->
+                        <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                             <div class="modal-header">
+                             <b class="modal-title" id="deleteModalLabel">Delete ticket</b>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                            <div class="modal-body">Are you sure you want to delete "@item.Title"?</div>                           
+                            <div class="modal-footer">
+                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                             <form method="post" asp-action="Delete" asp-route-id="@item.Id" >
+                             <button type="submit" class="btn btn-danger">Delete</button>
+                             </form>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+               }
+            </table>
+         </div>
+      </div>
+   </div>
+</div>
+         </div>
+      </section>
