@@ -17,6 +17,10 @@ namespace HappyTesterWeb.Models
         public IssueStatusEnum TicketStatus { get; set; } = IssueStatusEnum.New;
         public IssueTypeEnum IssueType { get; set; }
 
+        [ForeignKey("AppUser")]
+        public string? AppUserId { get; set; }
+        public AppUser? AppUser { get; set; }
+
         //public DateTime CreatedDateTime { get; set; } = DateTime.Now;
 
         //public User? DevAssigned { get; set; }
