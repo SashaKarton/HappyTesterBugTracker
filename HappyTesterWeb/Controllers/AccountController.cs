@@ -27,6 +27,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel loginVM)
         {
             if (!ModelState.IsValid) return View(loginVM);
@@ -65,6 +66,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel registerVM)
         {
             if (!ModelState.IsValid) return View(registerVM);
@@ -95,11 +97,11 @@ namespace HappyTesterWeb.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        [HttpPost]
+        [HttpGet]     
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
