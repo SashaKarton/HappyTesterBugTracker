@@ -3,7 +3,7 @@ using HappyTesterWeb.Interfaces;
 using HappyTesterWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using HappyTesterWeb.ViewModels;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace HappyTesterWeb.Controllers
 {
@@ -18,7 +18,8 @@ namespace HappyTesterWeb.Controllers
             _ticketRepository = ticketRepository;
         }
 
-        [HttpGet]        
+        [HttpGet]
+        [Authorize]
         [Route("project")]        
         public async Task<IActionResult> Index()
         {
@@ -27,6 +28,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize]        
         [Route("project/{projectId}")]        
         public async Task<IActionResult> Detail(int projectId)
         {
@@ -36,6 +38,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("project/create")]
         public IActionResult Create()
         {
@@ -44,6 +47,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         [Route("project/create")]
         public async Task<IActionResult> Create(CreateProjectViewModel projectVM)
         {
@@ -79,6 +83,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [Route("project/edit/{projectId}")]
         public async Task<IActionResult> Edit(int projectId)
         {
@@ -93,6 +98,7 @@ namespace HappyTesterWeb.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         [Route("project/edit/{projectId}")]
         public async Task<IActionResult> Edit(int projectId, EditProjectViewModel projectVM)
         {
@@ -120,6 +126,7 @@ namespace HappyTesterWeb.Controllers
 
 
         //[HttpGet]
+        //[Authorize]
         //public async Task<IActionResult> Delete(int id)
         //{
         //    var project = await _projectRepository.GetProjectByIdAsync(id);
@@ -128,6 +135,8 @@ namespace HappyTesterWeb.Controllers
         //}
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteProject(int id)
         {
             var project = await _projectRepository.GetProjectByIdAsync(id);

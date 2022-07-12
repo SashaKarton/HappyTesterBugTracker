@@ -4,6 +4,7 @@ using HappyTesterWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HappyTesterWeb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace HappyTesterWeb.Controllers
@@ -20,6 +21,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("ticket")]
         public async Task<IActionResult> Index()
         {
@@ -29,6 +31,7 @@ namespace HappyTesterWeb.Controllers
 
 
         [HttpGet]
+        [Authorize]
         [Route("ticket/{id}")]
         public async Task<IActionResult> Detail(int id)
         {
@@ -43,6 +46,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("ticket/create")]
         public async Task<IActionResult> Create()
         {
@@ -53,6 +57,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         [Route("ticket/create")]
         public async Task<IActionResult> Create(CreateTicketViewModel ticketVM)
         {
@@ -76,6 +81,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [Route("ticket/edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -101,6 +107,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         [Route("ticket/edit/{id}")]
         public async Task<IActionResult> Edit(int id, EditTicketViewModel ticketVM)
         {
@@ -132,6 +139,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         //[HttpGet]
+        //[Authorize(Roles = "admin")]
         //public async Task<IActionResult> Delete(int id)
         //{
         //    var ticket = await _ticketRepository.GetTicketByIdAsync(id);
@@ -140,6 +148,8 @@ namespace HappyTesterWeb.Controllers
         //}
 
         [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var ticket = await _ticketRepository.GetTicketByIdAsync(id);

@@ -100,9 +100,12 @@
                
             </tbody>
          </table>
-         <div class="card-footer text-center">
-            <a asp-controller="ticket" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary ">Manage ticket</a>
-         </div>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <div class="card-footer text-center">
+                <a asp-controller="ticket" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary ">Manage ticket</a>
+             </div>
+         }
       </div>
    </div>
 
@@ -178,13 +181,13 @@
                   </td>
                </tr>
             </tbody>
-         </table>
-         <div class="card-footer text-center">
-            <a class="btn btn-secondary" type="button">Manage project</a>            
-         </div>
+         </table>       
+            <div class="card-footer text-center">
+                <a class="btn btn-secondary" type="button">Manage project</a>            
+            </div>         
       </div>
    </div>   
          
 </div>
-         </div>
-      </section>
+</div>
+</section>
