@@ -18,9 +18,8 @@ namespace HappyTesterWeb.Controllers
             _ticketRepository = ticketRepository;
         }
 
-        [HttpGet]
-        [Authorize]
-        [Route("project")]        
+        [HttpGet("projects")]
+        [Authorize]               
         public async Task<IActionResult> Index()
         {
             IEnumerable<Project> projects = await _projectRepository.GetAll();
@@ -29,7 +28,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpGet]
         [Authorize]        
-        [Route("project/{projectId}")]        
+        [Route("projects/{projectId}")]        
         public async Task<IActionResult> Detail(int projectId)
         {
             Project project = await _projectRepository.GetTicketsByProjectIdAsync(projectId);
@@ -39,7 +38,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("project/create")]
+        [Route("projects/create")]
         public IActionResult Create()
         {
             return View();
@@ -48,7 +47,7 @@ namespace HappyTesterWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        [Route("project/create")]
+        [Route("projects/create")]
         public async Task<IActionResult> Create(CreateProjectViewModel projectVM)
         {
             if(String.IsNullOrEmpty(projectVM.Title) == false)
@@ -84,7 +83,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin")]
-        [Route("project/edit/{projectId}")]
+        [Route("projects/edit/{projectId}")]
         public async Task<IActionResult> Edit(int projectId)
         {
             var project = await _projectRepository.GetProjectByIdAsync(projectId);
@@ -99,7 +98,7 @@ namespace HappyTesterWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        [Route("project/edit/{projectId}")]
+        [Route("projects/edit/{projectId}")]
         public async Task<IActionResult> Edit(int projectId, EditProjectViewModel projectVM)
         {
             if (!ModelState.IsValid)

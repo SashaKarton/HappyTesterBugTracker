@@ -20,9 +20,8 @@ namespace HappyTesterWeb.Controllers
             _ticketRepository = ticketRepository;
         }
 
-        [HttpGet]
-        [Authorize]
-        [Route("ticket")]
+        [HttpGet("tickets")]
+        [Authorize]        
         public async Task<IActionResult> Index()
         {
             IEnumerable<Ticket> tickets = await _ticketRepository.GetAll();
@@ -32,7 +31,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("ticket/{id}")]
+        [Route("tickets/{id}")]
         public async Task<IActionResult> Detail(int id)
         {
             Ticket ticket = await _ticketRepository.GetTicketByIdAsync(id);
@@ -47,7 +46,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("ticket/create")]
+        [Route("tickets/create")]
         public async Task<IActionResult> Create()
         {
             ViewBag.ProjectsList = await _projectRepository.GetAllProjectsSelectList();
@@ -58,7 +57,7 @@ namespace HappyTesterWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        [Route("ticket/create")]
+        [Route("tickets/create")]
         public async Task<IActionResult> Create(CreateTicketViewModel ticketVM)
         {
             if (ModelState.IsValid)
@@ -82,7 +81,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpGet]
         [Authorize(Roles = "admin")]
-        [Route("ticket/edit/{id}")]
+        [Route("tickets/edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
             var ticket = await _ticketRepository.GetTicketByIdAsync(id);
@@ -108,7 +107,7 @@ namespace HappyTesterWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
-        [Route("ticket/edit/{id}")]
+        [Route("tickets/edit/{id}")]
         public async Task<IActionResult> Edit(int id, EditTicketViewModel ticketVM)
         {
             if (!ModelState.IsValid)
