@@ -10,10 +10,7 @@ namespace HappyTesterWeb.Models
         public string Title { get; set; }
         public string? Description { get; set; }
         public ICollection<Ticket>? Tickets { get; set; }
-
-        [ForeignKey("AppUser")]
-        public string? AppUserId { get; set; }
-        public AppUser? AppUser { get; set; }
+        public ICollection<AppUser>? AppUsers { get; set; }
 
     }
 }
