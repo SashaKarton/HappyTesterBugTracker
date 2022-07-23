@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using HappyTesterWeb.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using HappyTesterWeb.Services;
+using HappyTesterWeb.Helpers;
 
 
 //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -14,6 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")
     ));
