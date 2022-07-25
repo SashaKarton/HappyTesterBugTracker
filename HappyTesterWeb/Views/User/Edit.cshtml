@@ -1,0 +1,39 @@
+﻿@using HappyTesterWeb.ViewModels
+@model EditUserViewModel
+
+<form method="post" asp-action="Edit">
+
+   <div class="mb-3">
+    <label asp-for="UserName" class="form-label">Username<span class="text-danger">*</span></label> 
+    <input asp-for="UserName" class="form-control" placeholder="Title">
+    <span asp-validation-for="UserName" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="FirstName" class="form-label">First name</label>
+    <textarea asp-for="FirstName" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="FirstName" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="LastName" class="form-label">Last name</label>
+    <textarea asp-for="LastName" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="LastName" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Email" class="form-label">Email</label>
+    <textarea asp-for="Email" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="Email" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="PhoneNumber" class="form-label">Phone number</label>
+    <textarea asp-for="PhoneNumber" class="form-control" rows="3"></textarea>
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+  </div>
+
+  <input type="submit" value="Save">
+  <a asp-controller="user" asp-action="Detail" asp-route-id="@Model.Id" class="btn btn-secondary">Cancel</a>
+
+</form>
