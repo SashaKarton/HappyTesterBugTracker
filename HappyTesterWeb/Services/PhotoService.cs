@@ -16,6 +16,7 @@ namespace HappyTesterWeb.Services
                 config.Value.ApiKey,
                 config.Value.ApiSecret
                 );
+            _cloudinary = new Cloudinary(acc);
         }
         public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
         {
@@ -26,7 +27,7 @@ namespace HappyTesterWeb.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Crop("fill").Gravity("face")
+                    Transformation = new Transformation().Height(150).Crop("fill").Gravity("face")
                 };
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }

@@ -32,7 +32,7 @@ namespace HappyTesterWeb.Repository
 
         public async Task<Ticket> GetTicketByIdAsync(int id)
         {
-            return await _context.Tickets.Include(p => p.Project).FirstOrDefaultAsync(i => i.Id == id);
+            return await _context.Tickets.Include(p => p.Project).Include(u => u.AppUsers).FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<Ticket> GetTicketByIdAsNoTracking(int id)

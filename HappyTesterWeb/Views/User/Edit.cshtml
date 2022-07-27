@@ -1,8 +1,8 @@
 ﻿@using HappyTesterWeb.ViewModels
 @model EditUserViewModel
 
-<form method="post" asp-action="Edit">
-
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <input type="hidden" id="Id" name="Id" asp-for="Id" />
    <div class="mb-3">
     <label asp-for="UserName" class="form-label">Username<span class="text-danger">*</span></label> 
     <input asp-for="UserName" class="form-control" placeholder="Title">
@@ -10,26 +10,32 @@
   </div>
 
   <div class="mb-3">
+    <label asp-for="Image">Profile Image</label> 
+    <input asp-for="Image" type="file" class="form-control" placeholder="Image">
+    <span asp-validation-for="Image" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
     <label asp-for="FirstName" class="form-label">First name</label>
-    <textarea asp-for="FirstName" class="form-control" rows="3"></textarea>
+    <input asp-for="FirstName" class="form-control" rows="3">
     <span asp-validation-for="FirstName" class="text-danger"></span>
   </div>
 
   <div class="mb-3">
     <label asp-for="LastName" class="form-label">Last name</label>
-    <textarea asp-for="LastName" class="form-control" rows="3"></textarea>
+    <input asp-for="LastName" class="form-control" placeholder="Last name">
     <span asp-validation-for="LastName" class="text-danger"></span>
   </div>
 
   <div class="mb-3">
     <label asp-for="Email" class="form-label">Email</label>
-    <textarea asp-for="Email" class="form-control" rows="3"></textarea>
+    <input asp-for="Email" class="form-control" placeholder="Email">
     <span asp-validation-for="Email" class="text-danger"></span>
   </div>
 
   <div class="mb-3">
     <label asp-for="PhoneNumber" class="form-label">Phone number</label>
-    <textarea asp-for="PhoneNumber" class="form-control" rows="3"></textarea>
+    <input asp-for="PhoneNumber" class="form-control" placeholder="Phone number">
     <span asp-validation-for="PhoneNumber" class="text-danger"></span>
   </div>
 

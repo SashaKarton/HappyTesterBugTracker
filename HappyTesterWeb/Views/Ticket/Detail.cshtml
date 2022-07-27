@@ -70,21 +70,12 @@
                      <strong>Members</strong>
                   </td>
                   <td>
-                     <a class="inline" href="#">
-                        <img class="rounded-circle thumb24" src="/assets/angle/user/02-8a109a16a60ca1bfd78e1880b266ef4a6525df857fc76ec5a10d7166ba5078ea.jpg" alt="project member" />
+                      @foreach(var user in Model.AppUsers)
+                      {
+                     <a asp-controller="user" asp-action="Detail" asp-route-id="@user.Id" class="inline">
+                        <img class="rounded-circle thumb24" src="@user.ProfileImageUrl" />
                      </a>
-                     <a class="inline" href="#">
-                        <img class="rounded-circle thumb24" src="/assets/angle/user/04-30572875ea483f884e565f55eb93236c23b3df72e2fb7f26fc13b18303c5dc5c.jpg" alt="project member" />
-                     </a>
-                     <a class="inline" href="#">
-                        <img class="rounded-circle thumb24" src="/assets/angle/user/05-e22682a5063e5a2eb16cd5da54987856c349c7cde3da0105a61e530a3dc11957.jpg" alt="project member" />
-                     </a>
-                     <a class="inline" href="#">
-                        <img class="rounded-circle thumb24" src="/assets/angle/user/06-5ba607c03b0d678078903e0ff90d5b114bf4b5c2250ff374ee243e1527ac06c3.jpg" alt="project member" />
-                     </a>
-                     <a class="inline" href="#">
-                        <strong>+5</strong>
-                     </a>
+                      }
                   </td>
                </tr>
                <tr>

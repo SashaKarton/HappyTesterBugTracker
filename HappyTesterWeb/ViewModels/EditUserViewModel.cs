@@ -14,6 +14,8 @@ namespace HappyTesterWeb.ViewModels
         [Required(ErrorMessage = "Email address is required")]
         public string Email { get; set; }
         public string? PhoneNumber { get; set; }
+        public string? ProfileImageUrl { get; set; }
+        public IFormFile? Image { get; set; }
 
     }
 }
