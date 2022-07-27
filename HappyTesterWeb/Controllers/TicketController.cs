@@ -36,10 +36,7 @@ namespace HappyTesterWeb.Controllers
         {
             Ticket ticket = await _ticketRepository.GetTicketByIdAsync(id);
 
-            if (ticket == null)
-            {
-                return View("Error");
-            }
+            if (ticket == null) return View("Error");
 
             return View(ticket);
         }
@@ -85,11 +82,8 @@ namespace HappyTesterWeb.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var ticket = await _ticketRepository.GetTicketByIdAsync(id);
-            
-            if (ticket == null) 
-                {
-                return View("Error");
-                }
+
+            if (ticket == null) return View("Error");
 
             var ticketVM = new EditTicketViewModel
             {
@@ -117,10 +111,8 @@ namespace HappyTesterWeb.Controllers
             }
 
             var userTicket = await _ticketRepository.GetTicketByIdAsNoTracking(id);
-            if (userTicket == null)
-            {
-                return View("Error");
-            }
+
+            if (userTicket == null) return View("Error");
 
             var ticket = new Ticket
             {
@@ -152,6 +144,7 @@ namespace HappyTesterWeb.Controllers
         public async Task<IActionResult> DeleteTicket(int id)
         {
             var ticket = await _ticketRepository.GetTicketByIdAsync(id);
+
             if (ticket == null) return View("Error");
 
             _ticketRepository.Delete(ticket);
