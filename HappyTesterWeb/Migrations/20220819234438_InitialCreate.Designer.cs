@@ -12,47 +12,17 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HappyTesterWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220725224134_UserPhoto")]
-    partial class UserPhoto
+    [Migration("20220819234438_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("AppUserProject", b =>
-                {
-                    b.Property<string>("AppUsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("ProjectsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AppUsersId", "ProjectsId");
-
-                    b.HasIndex("ProjectsId");
-
-                    b.ToTable("AppUserProject");
-                });
-
-            modelBuilder.Entity("AppUserTicket", b =>
-                {
-                    b.Property<string>("AppUsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("TicketsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AppUsersId", "TicketsId");
-
-                    b.HasIndex("TicketsId");
-
-                    b.ToTable("AppUserTicket");
-                });
 
             modelBuilder.Entity("HappyTesterWeb.Models.AppUser", b =>
                 {
@@ -128,6 +98,36 @@ namespace HappyTesterWeb.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("HappyTesterWeb.Models.AppUserProject", b =>
+                {
+                    b.Property<string>("AppUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProjectsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUsersId", "ProjectsId");
+
+                    b.HasIndex("ProjectsId");
+
+                    b.ToTable("AppUserProjects");
+                });
+
+            modelBuilder.Entity("HappyTesterWeb.Models.AppUserTicket", b =>
+                {
+                    b.Property<string>("AppUsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("TicketsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AppUsersId", "TicketsId");
+
+                    b.HasIndex("TicketsId");
+
+                    b.ToTable("AppUserTickets");
+                });
+
             modelBuilder.Entity("HappyTesterWeb.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -165,7 +165,7 @@ namespace HappyTesterWeb.Migrations
                     b.Property<int>("IssueType")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int>("ProjectsId")
                         .HasColumnType("int");
 
                     b.Property<int>("TicketStatus")
@@ -177,7 +177,7 @@ namespace HappyTesterWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ProjectsId");
 
                     b.ToTable("Tickets");
                 });
@@ -248,13 +248,13 @@ namespace HappyTesterWeb.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("AppUsersId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUsersId");
 
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
@@ -270,26 +270,26 @@ namespace HappyTesterWeb.Migrations
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("AppUsersId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUsersId");
 
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("AppUsersId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.HasKey("AppUsersId", "RoleId");
 
                     b.HasIndex("RoleId");
 
@@ -298,7 +298,7 @@ namespace HappyTesterWeb.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("AppUsersId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
@@ -310,12 +310,12 @@ namespace HappyTesterWeb.Migrations
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("AppUsersId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AppUserProject", b =>
+            modelBuilder.Entity("HappyTesterWeb.Models.AppUserProject", b =>
                 {
                     b.HasOne("HappyTesterWeb.Models.AppUser", null)
                         .WithMany()
@@ -330,7 +330,7 @@ namespace HappyTesterWeb.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AppUserTicket", b =>
+            modelBuilder.Entity("HappyTesterWeb.Models.AppUserTicket", b =>
                 {
                     b.HasOne("HappyTesterWeb.Models.AppUser", null)
                         .WithMany()
@@ -349,7 +349,7 @@ namespace HappyTesterWeb.Migrations
                 {
                     b.HasOne("HappyTesterWeb.Models.Project", "Project")
                         .WithMany("Tickets")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("ProjectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -369,7 +369,7 @@ namespace HappyTesterWeb.Migrations
                 {
                     b.HasOne("HappyTesterWeb.Models.AppUser", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AppUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -378,7 +378,7 @@ namespace HappyTesterWeb.Migrations
                 {
                     b.HasOne("HappyTesterWeb.Models.AppUser", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AppUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -393,7 +393,7 @@ namespace HappyTesterWeb.Migrations
 
                     b.HasOne("HappyTesterWeb.Models.AppUser", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AppUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -402,7 +402,7 @@ namespace HappyTesterWeb.Migrations
                 {
                     b.HasOne("HappyTesterWeb.Models.AppUser", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AppUsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -1,0 +1,177 @@
+﻿@using HappyTesterWeb.Data.Enum
+@using HappyTesterWeb.ViewModels
+@model List<UserProjectViewModel>
+@*@model Project
+
+
+<div class="card b">
+         <div class="card-body">
+           <table class="table w-100" id="datatable1">
+            <tbody>
+               <tr>
+                  <td>
+                     <strong>Project</strong>
+                  </td>
+                  <td>@Model.Title</td> 
+               </tr>
+               <tr>
+                  <td>
+                     <strong>Description</strong>
+                  </td>
+                  <td>@Model.Description</td>
+               </tr>                       
+             </tbody>
+         </table>                    
+      </div>
+      <!-- end Aside card-->
+   </div>
+      <div>
+         <a asp-controller="userProject" asp-action="EditUserProject" asp-route-projectId="@Model." class="btn btn-sm btn-primary" type="button">Add new user</a>
+      </div> 
+<div class="row">
+<div class="col-xl">
+      <div class="mb-3 d-flex">
+
+         <div class="card card-default">
+   <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="table-ext-1">
+         <thead>
+            <tr>               
+               <th>Picture</th>
+               <th>Username</th>
+               <th>First Name</th>
+               <th>Last Name</th>
+               <th>Email</th>
+               <th>Phone Number</th> 
+               <th>Details</th>
+               @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                {                    
+                    <th>Delete</th>
+                }
+             </tr>
+         </thead>
+         @foreach(var item in Model.AppUsers)
+         {
+         <tbody>
+            <tr>   
+               <td>
+                  <div class="media">
+                     <img class="img-fluid circle" src="@item.ProfileImageUrl" alt="Image" />
+                  </div>
+               </td>
+               <td>@item.UserName</td>
+               <td>@item.FirstName</td>
+               <td>@item.LastName</td>
+               <td>@item.Email</td>
+               <td>@item.PhoneNumber</td>
+               <td><a asp-controller="user" asp-action="Detail" asp-route-id="@item.Id">Details</a>
+               </td>
+               @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                {
+                <td>
+                                    <!-- Button trigger modal -->
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id" class="btn btn-danger text-white">
+                        Delete
+                    </a>                    
+                </td>
+            }
+         <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+             <div class="modal-content">
+          <div class="modal-header">
+              <b class="modal-title" id="deleteModalLabel">Delete</b>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+             <div class="modal-body">Are you sure you want to delete user @item.UserName from this project?</div>                           
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              <form method="post" asp-controller="userProject" asp-action="Delete" asp-route-id="@item.Id" >
+               <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+             </div>
+             </div>
+             </div>
+             </div>   
+            </tr>
+         </tbody>
+         }
+      </table>
+   </div>
+   </div>
+</div>  
+*@ 
+ <a asp-controller="userProject" asp-action="EditUserProject" asp-route-projectId="@ViewBag.ProjectId" class="btn btn-sm btn-primary" type="button">Add new user</a>
+<div class="card card-default">
+   <div class="table-responsive">
+      <table class="table table-bordered table-hover" id="table-ext-1">
+         <thead>
+            <tr>               
+               <th>Picture</th>
+               <th>Username</th>
+               <th>First Name</th>
+               <th>Last Name</th>
+               <th>Email</th>
+               <th>Phone Number</th> 
+               <th>Details</th>
+               @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                {
+                    <th>Edit</th>
+                    <th>Delete</th>
+                }
+             </tr>
+         </thead>
+         @foreach(var item in Model)
+         {
+         <tbody>
+            <tr>   
+               <td>
+                  <div class="media">
+                     <img class="img-fluid circle" src="@item.ProfileImageUrl" alt="Image" />
+                  </div>
+               </td>
+               <td>@item.UserName</td>
+               <td>@item.FirstName</td>
+               <td>@item.LastName</td>
+               <td>@item.Email</td>
+               <td>@item.PhoneNumber</td>
+               <td><a asp-controller="user" asp-action="Detail" asp-route-id="@item.Id">Details</a>
+               </td>
+               @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                {
+                <td>
+                    <a asp-controller="user" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                </td>
+                <td>
+                                    <!-- Button trigger modal -->
+                    <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal-@item.Id" class="btn btn-danger text-white">
+                        Delete
+                    </a>                    
+                </td>
+            }
+         <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@item.Id" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+             <div class="modal-dialog">
+             <div class="modal-content">
+          <div class="modal-header">
+              <b class="modal-title" id="deleteModalLabel">Delete</b>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+             <div class="modal-body">Are you sure you want to delete user @item.UserName?</div>                           
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              <form method="post" asp-action="Delete" asp-route-id="@item.Id" >
+               <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+             </div>
+             </div>
+             </div>
+             </div>   
+            </tr>
+         </tbody>
+         }
+      </table>
+   </div>
+
+
+

@@ -1,6 +1,8 @@
 ﻿using HappyTesterWeb.Data;
 using HappyTesterWeb.Interfaces;
 using HappyTesterWeb.Models;
+using HappyTesterWeb.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace HappyTesterWeb.Repository
@@ -12,11 +14,11 @@ namespace HappyTesterWeb.Repository
         {
             _context = context;
         }
-        public bool Add(AppUser user)
-        {
-            _context.Add(user);
-            return Save();
-        }
+        //public bool Add(AppUser user)
+        //{
+        //    _context.Add(user);
+        //    return Save();
+        //}
 
         public bool Delete(AppUser user)
         {
@@ -29,9 +31,18 @@ namespace HappyTesterWeb.Repository
             return await _context.Users.ToListAsync();
         }
 
+        public async Task<IEnumerable<SelectListItem>> GetAllUsersSelectList()
+        {
+            return await _context.Users.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.UserName
+            }).ToListAsync();
+        }
+
         public async Task<AppUser> GetUserById(string id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.Where(u => u.Id == id).Include(p => p.Projects).FirstOrDefaultAsync();
         }
 
         public async Task<AppUser> GetUserByIdAsNoTracking(string id)
@@ -50,5 +61,18 @@ namespace HappyTesterWeb.Repository
             _context.Update(user);
             return Save();
         }
+
+        //public void PopulateUserChoises(EditUserProjectViewModel editVM)
+        //{
+        //    editVM.UserChoises = _context.Users.Select(u => new SelectListItem
+        //    {
+        //        Value = u.Id,
+        //        Text = u.UserName
+        //    });
+        //}
+        //public Task<AppUser> GetUserFromList()
+        //{
+        //    return _context.Users.Where(u => u.Id.Contains(u.Id));
+        //}
     }
 }

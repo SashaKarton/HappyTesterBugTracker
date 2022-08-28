@@ -13,12 +13,14 @@ namespace HappyTesterWeb.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IPhotoService _photoService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IUserProjectRepository _userProjectRepository;
         
-        public UserController(IUserRepository userRepository, IPhotoService photoService, UserManager<AppUser> userManager)
+        public UserController(IUserRepository userRepository, IPhotoService photoService, UserManager<AppUser> userManager, IUserProjectRepository userProjectRepository)
         {
             _userRepository = userRepository;
             _photoService = photoService;
             _userManager = userManager;
+            _userProjectRepository = userProjectRepository;
         }
 
         private void MapUserEdit(AppUser user, EditUserViewModel editVM, ImageUploadResult photoResult)
@@ -64,7 +66,9 @@ namespace HappyTesterWeb.Controllers
             var user = await _userRepository.GetUserById(id);
 
             if (user == null) return View("Error");
-
+            
+            var userProject = await _userProjectRepository.GetUserProjectByUserIdAsync(id);
+            ViewBag.ProjectId = userProject.ProjectsId;
 
             var userDetailViewModel = new DetailUserViewModel()
             {
@@ -75,6 +79,7 @@ namespace HappyTesterWeb.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
+                Projects = user.Projects,
 
             };
             return View(userDetailViewModel);
@@ -103,26 +108,7 @@ namespace HappyTesterWeb.Controllers
             return View(editVM);
 
         }
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Edit(EditUserViewModel editVM)
-        {
-            if (!ModelState.IsValid)
-            {
-                ModelState.AddModelError("", "Failed to edit profile");
-                return View("Edit", editVM);
-            }
 
-            var user = await _userRepository.GetUserByIdAsNoTracking(editVM.Id);
-
-            if (user == null) return View("Error");
-
-            MapUserEdit(user, editVM);
-            _userRepository.Update(user);
-            return RedirectToAction("Detail", new {id = user.Id});
-        }
-        */
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]

@@ -1,0 +1,34 @@
+﻿@using HappyTesterWeb.Models
+@using HappyTesterWeb.ViewModels
+
+@*@model List<EditUserProjectViewModel>*@
+@model EditUserProjectViewModel
+
+
+@*@foreach(var item in Model)
+{
+ <form method="post" asp-action="EditUserProject">
+
+<input type="hidden" id="projectId" name="projectId" asp-for="@item.ProjectsId" />
+<label asp-for="@item.AppUsersId" class="form-label"></label>
+<select asp-for="@item.AppUsersId" asp-items="@ViewBag.UserList" class="form-control form-control-lg" multiple>
+<option value="">Select User</option>
+</select>
+<input type="submit" value="Save">
+  <a asp-controller="project" asp-action="Detail" asp-route-projectId="@item.ProjectsId" class="btn btn-secondary">Back to Project</a>
+}
+        
+</form>
+}*@
+
+
+ <form method="post" asp-action="EditUserProject">
+@*<input type="hidden" projectId="@ViewBag.ProjectId" name="@ViewBag.ProjectId" asp-for="ProjectsId" />*@
+<label asp-for="@Model.AppUsersIds" class="form-label">Users</label>
+<select asp-for="@Model.AppUsersIds" asp-items="@ViewBag.UserList" class="form-control form-control-lg" multiple>
+<option value="">--Select User--</option>
+</select>
+<input type="submit" value="Save">
+  <a asp-controller="project" asp-action="Detail" asp-route-projectId="@ViewBag.ProjectId" class="btn btn-secondary">Back to Project</a>
+        
+</form>

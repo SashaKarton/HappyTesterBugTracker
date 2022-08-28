@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HappyTesterWeb.Repository
 {
-    public class ProjectRepository :IProjectRepository
+    public class ProjectRepository : IProjectRepository
     {
         private readonly ApplicationDbContext _context;
         public ProjectRepository(ApplicationDbContext context)
@@ -14,11 +14,11 @@ namespace HappyTesterWeb.Repository
             _context = context;
         }
 
-        public bool Add(Project project)
-        {
-            _context.Add(project);
-            return Save();
-        }
+        //public bool Add(Project project)
+        //{
+        //    _context.Add(project);
+        //    return Save();
+        //}
 
         public bool Delete(Project project)
         {
@@ -34,17 +34,26 @@ namespace HappyTesterWeb.Repository
 
         public async Task<Project> GetTicketsByProjectIdAsync(int projectId)
         {
-            return await _context.Projects.Include(t => t.Tickets).FirstOrDefaultAsync(i => i.Id == projectId);            
+            return await _context.Projects.Include(t => t.Tickets).FirstOrDefaultAsync(i => i.Id == projectId);
         }
 
         public async Task<Project> GetProjectByIdAsync(int projectId)
         {
-            return await _context.Projects.FirstOrDefaultAsync(i => i.Id == projectId);            
+            return await _context.Projects.FirstOrDefaultAsync(i => i.Id == projectId);
         }
+        //public async Task<Project> GetProjectWithUserByIdAsync(int projectId)
+        //{
+        //    return await _context.Projects.Include(u => u.AppUsers).FirstOrDefaultAsync(i => i.Id == projectId);
+        //}
+        //public async Task<Project> GetProjectWithUserByIdNoTracking(int projectId)
+        //{
+        //    return await _context.Projects.Include(u => u.AppUsers).AsNoTracking().FirstOrDefaultAsync(i => i.Id == projectId);
+        //}
+
 
         public async Task<Project> GetProjectByIdAsNoTracking(int projectId)
         {
-            return await _context.Projects.AsNoTracking().FirstOrDefaultAsync(i => i.Id == projectId);            
+            return await _context.Projects.AsNoTracking().FirstOrDefaultAsync(i => i.Id == projectId);
         }
 
         public bool Save()
@@ -75,5 +84,17 @@ namespace HappyTesterWeb.Repository
                 Text = x.Title
             }).ToListAsync();
         }
+
+        //public bool UpdateUserProject(Project project, IEnumerable<string> model)
+        //{
+        //    _context.UpdateRange(project, model);
+        //    return Save();
+        //}
+
+        public async Task<Project> GetUsersByProjectIdAsync(int projectId)
+        {
+            return await _context.Projects.Include(u => u.AppUsers).FirstOrDefaultAsync(i => i.Id == projectId);
+        }
     }
+
 }

@@ -5,36 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HappyTesterWeb.Migrations
 {
-    public partial class Identity : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Tickets_Projects_ProjectId",
-                table: "Tickets");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "ProjectId",
-                table: "Tickets",
-                type: "int",
-                nullable: false,
-                defaultValue: 0,
-                oldClrType: typeof(int),
-                oldType: "int",
-                oldNullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "AppUserId",
-                table: "Tickets",
-                type: "nvarchar(450)",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "AppUserId",
-                table: "Projects",
-                type: "nvarchar(450)",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -55,6 +29,8 @@ namespace HappyTesterWeb.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProfileImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -73,6 +49,20 @@ namespace HappyTesterWeb.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Projects",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Projects", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -181,15 +171,87 @@ namespace HappyTesterWeb.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Tickets_AppUserId",
-                table: "Tickets",
-                column: "AppUserId");
+            migrationBuilder.CreateTable(
+                name: "AppUserProjects",
+                columns: table => new
+                {
+                    AppUsersId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProjectsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserProjects", x => new { x.AppUsersId, x.ProjectsId });
+                    table.ForeignKey(
+                        name: "FK_AppUserProjects_AspNetUsers_AppUsersId",
+                        column: x => x.AppUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppUserProjects_Projects_ProjectsId",
+                        column: x => x.ProjectsId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tickets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProjectId = table.Column<int>(type: "int", nullable: false),
+                    IssuePriority = table.Column<int>(type: "int", nullable: false),
+                    TicketStatus = table.Column<int>(type: "int", nullable: false),
+                    IssueType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tickets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tickets_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppUserTickets",
+                columns: table => new
+                {
+                    AppUsersId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TicketsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppUserTickets", x => new { x.AppUsersId, x.TicketsId });
+                    table.ForeignKey(
+                        name: "FK_AppUserTickets_AspNetUsers_AppUsersId",
+                        column: x => x.AppUsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AppUserTickets_Tickets_TicketsId",
+                        column: x => x.TicketsId,
+                        principalTable: "Tickets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projects_AppUserId",
-                table: "Projects",
-                column: "AppUserId");
+                name: "IX_AppUserProjects_ProjectsId",
+                table: "AppUserProjects",
+                column: "ProjectsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppUserTickets_TicketsId",
+                table: "AppUserTickets",
+                column: "TicketsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -206,12 +268,12 @@ namespace HappyTesterWeb.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
-                column: "UserId");
+                column: "AppUsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
                 table: "AspNetUserLogins",
-                column: "UserId");
+                column: "AppUsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
@@ -230,42 +292,19 @@ namespace HappyTesterWeb.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Projects_AspNetUsers_AppUserId",
-                table: "Projects",
-                column: "AppUserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Tickets_AspNetUsers_AppUserId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Tickets_ProjectId",
                 table: "Tickets",
-                column: "AppUserId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Tickets_Projects_ProjectId",
-                table: "Tickets",
-                column: "ProjectId",
-                principalTable: "Projects",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                column: "ProjectsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Projects_AspNetUsers_AppUserId",
-                table: "Projects");
+            migrationBuilder.DropTable(
+                name: "AppUserProjects");
 
-            migrationBuilder.DropForeignKey(
-                name: "FK_Tickets_AspNetUsers_AppUserId",
-                table: "Tickets");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Tickets_Projects_ProjectId",
-                table: "Tickets");
+            migrationBuilder.DropTable(
+                name: "AppUserTickets");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -283,41 +322,16 @@ namespace HappyTesterWeb.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Tickets");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Tickets_AppUserId",
-                table: "Tickets");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Projects_AppUserId",
-                table: "Projects");
-
-            migrationBuilder.DropColumn(
-                name: "AppUserId",
-                table: "Tickets");
-
-            migrationBuilder.DropColumn(
-                name: "AppUserId",
-                table: "Projects");
-
-            migrationBuilder.AlterColumn<int>(
-                name: "ProjectId",
-                table: "Tickets",
-                type: "int",
-                nullable: true,
-                oldClrType: typeof(int),
-                oldType: "int");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Tickets_Projects_ProjectId",
-                table: "Tickets",
-                column: "ProjectId",
-                principalTable: "Projects",
-                principalColumn: "Id");
+            migrationBuilder.DropTable(
+                name: "Projects");
         }
     }
 }

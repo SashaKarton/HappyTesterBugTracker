@@ -4,6 +4,7 @@ using HappyTesterWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using HappyTesterWeb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HappyTesterWeb.Controllers
 {
@@ -11,11 +12,13 @@ namespace HappyTesterWeb.Controllers
     {
         private readonly IProjectRepository _projectRepository;
         private readonly ITicketRepository _ticketRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ProjectController(IProjectRepository projectRepository, ITicketRepository ticketRepository)
+        public ProjectController(IProjectRepository projectRepository, ITicketRepository ticketRepository, IUserRepository userRepository)
         {
             _projectRepository = projectRepository;
             _ticketRepository = ticketRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("projects")]
@@ -31,8 +34,8 @@ namespace HappyTesterWeb.Controllers
         [Route("projects/{projectId}")]        
         public async Task<IActionResult> Detail(int projectId)
         {
-            Project project = await _projectRepository.GetTicketsByProjectIdAsync(projectId);
-            return View(project); 
+            var tickets = await _projectRepository.GetTicketsByProjectIdAsync(projectId);
+            return View(tickets); 
 
         }
 
@@ -107,8 +110,8 @@ namespace HappyTesterWeb.Controllers
                 return View("Edit", projectVM);
             }
 
-            var userProject = await _projectRepository.GetProjectByIdAsNoTracking(projectId);
-            if (userProject == null)
+            var getProject = await _projectRepository.GetProjectByIdAsNoTracking(projectId);
+            if (getProject == null)
             {
                 return View("Error");
             }
@@ -121,17 +124,7 @@ namespace HappyTesterWeb.Controllers
             };
             _projectRepository.Update(project);
             return RedirectToAction("Index");
-        }
-
-
-        //[HttpGet]
-        //[Authorize]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var project = await _projectRepository.GetProjectByIdAsync(id);
-        //    if (project == null) return View("error");
-        //    return View(project);
-        //}
+        }       
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
