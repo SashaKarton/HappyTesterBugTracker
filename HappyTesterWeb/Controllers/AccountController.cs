@@ -11,12 +11,12 @@ namespace HappyTesterWeb.Controllers
 
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly ApplicationDbContext _context;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ApplicationDbContext context)
+        
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _context = context;
+            
         }
 
         [HttpGet]
@@ -32,7 +32,7 @@ namespace HappyTesterWeb.Controllers
         {
             if (!ModelState.IsValid) return View(loginVM);
             var user = await _userManager.FindByEmailAsync(loginVM.EmailAddress);
-
+            
             if (user != null)
             {
                 //User is found, check password
@@ -53,7 +53,7 @@ namespace HappyTesterWeb.Controllers
 
             }
 
-            //User not found
+            //User is not found
             TempData["Error"] = "Wrong credentials. Please try again";
             return View(loginVM);
         }
