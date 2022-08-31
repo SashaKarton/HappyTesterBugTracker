@@ -52,5 +52,10 @@ namespace HappyTesterWeb.Repository
             _context.Update(ticket);
             return Save();
         }
+
+        public async Task<Ticket> GetTicketWithUsersByIdAsync(int id)
+        {
+            return await _context.Tickets.Include(u => u.AppUsers).FirstOrDefaultAsync(i => i.Id == id);
+        }
     }
 }

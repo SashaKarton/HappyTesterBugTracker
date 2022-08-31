@@ -1,0 +1,14 @@
+﻿@using HappyTesterWeb.Models
+@using HappyTesterWeb.ViewModels
+@model EditUserTicketViewModel
+
+
+ <form method="post" asp-action="EditUserTicket">
+<label asp-for="@Model.AppUsersIds" class="form-label">Users</label>
+<select asp-for="@Model.AppUsersIds" asp-items="@ViewBag.UserList" class="form-control form-control-lg" multiple>
+<option value="">--Select User--</option>
+</select>
+<input type="submit" value="Save">
+  <a asp-controller="project" asp-action="Detail" asp-route-projectId="@ViewBag.TicketId" class="btn btn-secondary">Back to Ticket</a>
+        
+</form>
