@@ -91,7 +91,7 @@ namespace HappyTesterWeb.Repository
         //    return Save();
         //}
 
-        public async Task<Project> GetUsersByProjectIdAsync(int projectId)
+        public async Task<Project> GetProjectWithUsersByIdAsync(int projectId)
         {
             return await _context.Projects.Include(u => u.AppUsers).FirstOrDefaultAsync(i => i.Id == projectId);
         }

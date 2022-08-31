@@ -19,30 +19,21 @@ namespace HappyTesterWeb.Controllers
             _userRepository = userRepository;
         }
 
-        private void MapEditUserProject(EditUserProjectViewModel result, AppUserProject userProject, int projectId)
-        {
-            foreach (var userId in result.AppUsersIds)
-            {
-                userProject.AppUsersId = userId;
-            }
-            userProject.ProjectsId = projectId;
-            
-        }
-
 
         [HttpGet("projects/{projectId}/users")]
         [Authorize]
         public async Task<IActionResult> Index(int projectId)
         {
-            var project = await _projectRepository.GetUsersByProjectIdAsync(projectId);
             ViewBag.ProjectId = projectId;
-
+            var project = await _projectRepository.GetProjectWithUsersByIdAsync(projectId);                   
+            
             List<UserProjectViewModel> result = new List<UserProjectViewModel>();
             foreach (var user in project.AppUsers)
             {
                 var userProjectVM = new UserProjectViewModel()
                 {
                     Id = user.Id,
+                    ProjectId = projectId,
                     UserName = user.UserName,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
@@ -63,20 +54,9 @@ namespace HappyTesterWeb.Controllers
             if (usersProjects == null) return View("Error");
 
             ViewBag.UserList = await _userRepository.GetAllUsersSelectList();
-            ViewBag.ProjectId = projectId;
+            ViewBag.ProjectId = projectId;            
 
-            //var result = new List<EditUserProjectViewModel>();
-            //foreach (var userProject in usersProjects)
-            //{
-            //    var editVM = new EditUserProjectViewModel()
-            //    {
-            //        ProjectsId = userProject.ProjectsId,
-            //        AppUsersId = userProject.AppUsersId,
-            //    };
-            //    result.Add(editVM);
-            //}
-
-            return View(/*result*/);
+            return View();
 
         }
 
@@ -84,7 +64,7 @@ namespace HappyTesterWeb.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin")]
         [Route("projects/{projectId}/adduser")]
-        public async Task<IActionResult> EditUserProject(/*List<EditUserProjectViewModel>*/EditUserProjectViewModel result, int projectId)
+        public async Task<IActionResult> EditUserProject(EditUserProjectViewModel result, int projectId)
         {
             if (!ModelState.IsValid)
             {
@@ -94,40 +74,10 @@ namespace HappyTesterWeb.Controllers
             var getUsersProjects = await _userProjectRepository.GetUserProjectByProjectNoTracking(result.ProjectsId);
             if (getUsersProjects == null) return View("Error");
 
-            /////          1ST APPROACH
-            //var usersProjects = new List<AppUserProject>();
-            //foreach (var editVM in result)
-            //{
-            //    var userProject = new AppUserProject
-            //    {
-            //        ProjectsId = editVM.ProjectsId,
-            //        AppUsersId = editVM.AppUsersId,
-
-            //    };
-
-            //    usersProjects.Add(userProject);
-            //}
-
-            ////////           2ND APPROACH
-            //var usersProjects = result.ConvertAll(res => new AppUserProject
-            //{
-            //    ProjectsId = res.ProjectsId,
-            //    AppUsersId = res.AppUsersId
-            //});
-            ///////            3RD APPROACH
+           
             var usersProjects = new List<AppUserProject>();
             var userProject = new AppUserProject();
-            //foreach (var userProject in usersProjects)
-            //{
-            //    //MapEditUserProject(result, userProject, projectId);
-            //    foreach(var userId in result.AppUsersIds)
-            //    {
-            //        userProject.AppUsersId = userId;
-            //    }
-            //    userProject.ProjectsId = projectId;
-
-            //    usersProjects.Add(userProject);
-            //}
+            
             foreach(var userId in result.AppUsersIds)
             {
                 userProject.AppUsersId = userId;
@@ -144,6 +94,19 @@ namespace HappyTesterWeb.Controllers
             //}
 
             //_userProjectRepository.UpdateRange(usersProjects);
+            return RedirectToAction("Index", new { projectId = projectId });
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> DeleteUser(int projectId, string id)
+        {
+            var userProject = await _userProjectRepository.GetUserProjectByBothIds(projectId, id);
+
+            if (userProject == null) return View("Error");
+
+            _userProjectRepository.Delete(userProject);
             return RedirectToAction("Index", new { projectId = projectId });
         }
     }

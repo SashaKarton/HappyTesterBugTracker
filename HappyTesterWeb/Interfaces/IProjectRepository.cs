@@ -21,7 +21,7 @@ namespace HappyTesterWeb.Interfaces
         Task<Project> GetProjectByIdAsNoTracking(int projectId);
 
         (int id, bool success) AddAndGetId(Project project);
-        Task<Project> GetUsersByProjectIdAsync(int projectId);
+        Task<Project> GetProjectWithUsersByIdAsync(int projectId);
 
         //bool Add(Project project);
         bool Update(Project project);
