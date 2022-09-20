@@ -1,4 +1,5 @@
 ﻿using HappyTesterWeb.Data;
+using HappyTesterWeb.Interfaces;
 using HappyTesterWeb.Models;
 using HappyTesterWeb.ViewModels;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +12,13 @@ namespace HappyTesterWeb.Controllers
 
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly ISendGridEmail _sendGridEmail;
         
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ISendGridEmail sendGridEmail)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _sendGridEmail = sendGridEmail;
             
         }
 
@@ -102,6 +105,70 @@ namespace HappyTesterWeb.Controllers
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.EmailAddress);
+                if (user == null) return RedirectToAction("ForgotPasswordConfirmation");
+
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackurl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+
+                await _sendGridEmail.SendEmailAsync(model.EmailAddress, "Reset Email Confirmation", "Please reset email by going to this " +
+                    "<a href=\"" + callbackurl + "\">link</a>");
+                return RedirectToAction("ForgotPasswordConfirmation");
+            }
+            return View(model);
+
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string code = null)
+        {
+            return code == null ? View("Error") : View();
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(resetPasswordVM.EmailAddress);
+                if (user == null)
+                {
+                    ModelState.AddModelError("Email", "User is not found");
+                    return View();
+                }
+                var result = await _userManager.ResetPasswordAsync(user, resetPasswordVM.Code, resetPasswordVM.Password);
+                if(result.Succeeded)
+                {
+                    return RedirectToAction("ResetPasswordConfirmation");
+                }
+            }
+            return View(resetPasswordVM);
+        }
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
         }
     }
 }
