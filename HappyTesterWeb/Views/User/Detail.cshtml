@@ -59,17 +59,5 @@
         </div>
         </div>
     </div>
-
-    <table class="table">
-            <tbody>                                 
-                @foreach(var item in Model.Projects)
-                {
-                    <td>
-                        <a asp-controller="project" asp-action="Detail" asp-route-projectId="ViewBag.ProjectId">@item.Title</a>
-                    </td>                            
-                }                    
-             
-            </tbody>
-    </table>
     </div>
 </div>
