@@ -85,7 +85,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [Route("projects/edit/{projectId}")]
         public async Task<IActionResult> Edit(int projectId)
         {

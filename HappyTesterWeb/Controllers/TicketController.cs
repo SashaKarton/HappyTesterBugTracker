@@ -80,7 +80,7 @@ namespace HappyTesterWeb.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [Route("tickets/edit/{id}")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -103,7 +103,7 @@ namespace HappyTesterWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [Route("tickets/edit/{id}")]
         public async Task<IActionResult> Edit(int id, EditTicketViewModel ticketVM)
         {

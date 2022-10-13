@@ -46,8 +46,8 @@ namespace HappyTesterWeb.Controllers
             return View(result);             
         }
 
-        [HttpGet("projects/{projectId}/adduser")]
-        [Authorize(Roles = "admin")]        
+        [HttpGet("{projectId}/adduser")]
+        [Authorize]        
         public async Task<IActionResult> EditUserProject(int projectId)
         {
             var usersProjects = await _userProjectRepository.GetUserProjectByProjectIdAsync(projectId);
@@ -62,8 +62,8 @@ namespace HappyTesterWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin")]
-        [Route("projects/{projectId}/adduser")]
+        [Authorize]
+        [Route("{projectId}/adduser")]
         public async Task<IActionResult> EditUserProject(EditUserProjectViewModel result, int projectId)
         {
             if (!ModelState.IsValid)

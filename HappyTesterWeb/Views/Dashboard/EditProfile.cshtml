@@ -1,0 +1,45 @@
+﻿@using HappyTesterWeb.ViewModels
+@model EditProfileDashboardViewModel
+
+<form method="post" asp-action="EditProfile" enctype="multipart/form-data">
+    <input type="hidden" id="Id" name="Id" asp-for="Id" />
+   <div class="mb-3">
+    <label asp-for="UserName" class="form-label">Username<span class="text-danger">*</span></label> 
+    <input asp-for="UserName" class="form-control" placeholder="Title">
+    <span asp-validation-for="UserName" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Image">Profile Image</label> 
+    <input asp-for="Image" type="file" class="form-control" placeholder="Image">
+    <span asp-validation-for="Image" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="FirstName" class="form-label">First name</label>
+    <input asp-for="FirstName" class="form-control" rows="3">
+    <span asp-validation-for="FirstName" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="LastName" class="form-label">Last name</label>
+    <input asp-for="LastName" class="form-control" placeholder="Last name">
+    <span asp-validation-for="LastName" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="Email" class="form-label">Email</label>
+    <input asp-for="Email" class="form-control" placeholder="Email">
+    <span asp-validation-for="Email" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label asp-for="PhoneNumber" class="form-label">Phone number</label>
+    <input asp-for="PhoneNumber" class="form-control" placeholder="Phone number">
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+  </div>
+
+  <input type="submit" value="Save">
+  <a asp-controller="dashboard" asp-action="Profile" asp-route-id="@Model.Id" class="btn btn-secondary">Cancel</a>
+
+</form>
