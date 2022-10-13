@@ -7,7 +7,7 @@
             <div class="content-heading">Details</div>   
                 <a asp-controller="userTicket" asp-action="Index" asp-route-id="@Model.Id" class="btn btn-sm btn-primary" type="button">Users</a>
 <div class="row">
-   <div class="col-xl-6">
+   <div class="col-xl">
       <div class="card b">
          <div class="card-header">
             <div class="float-right">
@@ -80,14 +80,14 @@
                   </td>
                </tr>
                <tr>
-                  <td>
+                 @* <td>
                      <strong>Leader</strong>
                   </td>
                   <td>
                      <a href="" data-toggle="tooltip" data-title="Team leader">
                         <img class="rounded-circle thumb24" src="/assets/angle/user/03-6bda9faf011df695e3a8dbd1d139f732a9f01c91772bc9b7e1aed1330ca09279.jpg" alt="project member" />
                      </a>
-                  </td>
+                  </td>*@
                </tr>
                
             </tbody>
@@ -101,7 +101,7 @@
       </div>
    </div>
 
-   <div class="col-xl-6">
+@*   <div class="col-xl-6">
       <div class="card b">
          <div class="card-header">
             <div class="float-right">
@@ -178,7 +178,7 @@
                 <a class="btn btn-secondary" type="button">Manage project</a>            
             </div>         
       </div>
-   </div>   
+   </div>  *@ 
          
 </div>
 </div>
