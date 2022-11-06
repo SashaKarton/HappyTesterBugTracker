@@ -8,7 +8,7 @@
 <select asp-for="@Model.AppUsersIds" asp-items="@ViewBag.UserList" class="form-control form-control-lg" multiple>
 <option value="">--Select User--</option>
 </select>
-<input type="submit" value="Save">
+<input class="btn btn-success text-white" type="submit" value="Save">
   <a asp-controller="project" asp-action="Detail" asp-route-projectId="@ViewBag.ProjectId" class="btn btn-secondary">Back to Project</a>
         
 </form>
