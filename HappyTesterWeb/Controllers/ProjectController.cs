@@ -21,12 +21,38 @@ namespace HappyTesterWeb.Controllers
             _userRepository = userRepository;
         }
 
+
+
         [HttpGet("projects")]
         [Authorize]               
         public async Task<IActionResult> Index()
         {
             IEnumerable<Project> projects = await _projectRepository.GetAll();
-            return View(projects);
+
+            //foreach(var project in projects)
+            //{
+
+            //    var count = project.Tickets == null ? 0: project.Tickets.Count();
+
+            //    ViewBag.TicketCounts = count;               
+
+            //}
+            var result = new List<IndexProjectViewModel>();
+            foreach(var project in projects)
+            {
+                var projectVM = new IndexProjectViewModel()
+                {
+                    Id = project.Id,
+                    Title = project.Title,
+                    Description = project.Description,
+                    AppUsers = project.AppUsers,
+                    TicketCount = project.Tickets == null ? 0 : project.Tickets.Count()
+                };
+                result.Add(projectVM);
+            }
+
+            return View(result);
+
         }
 
         [HttpGet]

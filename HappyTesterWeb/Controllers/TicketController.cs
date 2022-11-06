@@ -26,7 +26,7 @@ namespace HappyTesterWeb.Controllers
         {
             IEnumerable<Ticket> tickets = await _ticketRepository.GetAll();
 
-            ViewBag.CountByEnums = tickets.Count();  // Need to update (count by status/type/priority)
+            
 
             return View(tickets);
         }

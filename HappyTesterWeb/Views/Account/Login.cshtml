@@ -4,64 +4,59 @@
 @{
     ViewData["Title"] = "Login";
 }
-<!--Validation-->
 
-<div class="row">
-    <div class="col-md-6 offset-3">
-        @if(TempData["Error"] != null)
-        {
-            <div class="col-md-12 alert alert-danger">
-                <span><b>Sorry!</b> - @TempData["Error"]</span>
-            </div>
-        }
-<!--Start of the Card-->
-<div class="wrapper">
-      <div class="block-center mt-4 wd-xl">
-<div class="card card-flat">
-    <div class="card-body">
-         <p class="text-center py-2">SIGN IN TO CONTINUE.</p>
-         <form asp-action="Login">
-             
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-              <div class="form-group">
-                 <label asp-for="EmailAddress" class="control-label"></label>
-                 <input asp-for="EmailAddress" class="form-control">
-                 <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                 <em class="fa fa-envelope"></em>
-              </div>                       
+<body>
 
-              <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-                <em class="fa fa-lock"></em>
-              </div>
-              <!--Remember me UNDER CONSTRUCTION-->
-            <div class="clearfix">
-               <div class="checkbox c-checkbox float-left mt-0">
-                  <label>
-                     <input type="checkbox" value="" name="remember" />
-                     <span class="fa fa-check"></span>Remember Me</label>
-               </div>
-               <!--Remember me END-->
-               <!--Forgot password UNDER CONSTRUCTION-->
-               <div class="float-right">
-                   <a asp-action="ForgotPassword" class="text-muted">Forgot your password?</a>
-               </div>
-               <!--Forgot password END-->
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                    </div>
+                                    <form asp-action="Login" class="user">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label asp-for="EmailAddress" class="control-label"></label>
+                                            <input asp-for="EmailAddress" class="form-control form-control-user">
+                                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label asp-for="Password" class="control-label"></label>
+                                            <input asp-for="Password" class="form-control form-control-user" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+
+                                        <input class="btn btn-primary btn-user btn-block" type="submit" value="Login" />
+
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">                                        
+                                        <a asp-action="ForgotPassword" class="small">Forgot your password?</a>
+                                    </div>
+                                    <div class="text-center">                                        
+                                        <a asp-controller="account" asp-action="register"  class="small">Create an Account!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            
-            
-            <div class="form-group">
-                <input class="btn btn-block btn-primary mt-3" type="submit" value="Log in" />
-            </div>
-         </form>
-         <p class="pt-3 text-center">Need to Signup?</p>         
-         <a asp-controller="account" asp-action="register"  class="btn btn-block btn-secondary">Register Now</a>
-      </div>
- </div>
- </div>
- </div>
- </div>
- </div>
-   <!--End of the Card-->
+
+        </div>
+
+    </div>
+
+</body>

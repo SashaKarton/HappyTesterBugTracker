@@ -1,11 +1,13 @@
-﻿@model IEnumerable<Project>
+﻿@*@model IEnumerable<Project>*@
+@using HappyTesterWeb.ViewModels
+@model List<IndexProjectViewModel>
 @{
     ViewData["Title"] = "Projects";
 }
 
 <section class="section-container">
          <div class="content-wrapper">
-            <div class="content-heading">Projects</div>
+            
 <div class="row">
 <div class="col-xl">
       <div class="mb-3 d-flex">
@@ -49,7 +51,7 @@
                          
                      </td>
                      <td>
-                        @ViewBag.TicketCount
+                        @item.TicketCount
                      </td>
                      <td>
 

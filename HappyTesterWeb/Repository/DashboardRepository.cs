@@ -25,7 +25,7 @@ namespace HappyTesterWeb.Repository
 
         public async Task<IEnumerable<Project>> GetAllUserProjects(List<int> ids)
         {
-            return await _context.Projects.Include(p => p.AppUsers).Where(x => ids.Contains(x.Id)).ToListAsync();
+            return await _context.Projects.Include(p => p.AppUsers).Include(t => t.Tickets).Where(x => ids.Contains(x.Id)).ToListAsync();
         }
         public async Task<IEnumerable<AppUserTicket>> GetAppUserTickets()
         {

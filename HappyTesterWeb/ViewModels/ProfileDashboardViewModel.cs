@@ -1,4 +1,6 @@
-﻿namespace HappyTesterWeb.ViewModels
+﻿using HappyTesterWeb.Models;
+
+namespace HappyTesterWeb.ViewModels
 {
     public class ProfileDashboardViewModel
     {
@@ -11,5 +13,10 @@
         public string? Email { get; set; }
         public string? PhoneNumber { get; set; }
         public IFormFile Image { get; set; }
+
+        public ICollection<Project?> Projects { get; set; }
+        public ICollection<Ticket?> Tickets { get; set; }
+
     }
+
 }

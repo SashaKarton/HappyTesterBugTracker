@@ -42,7 +42,7 @@ namespace HappyTesterWeb.Repository
 
         public async Task<AppUser> GetUserById(string id)
         {
-            return await _context.Users.Where(u => u.Id == id).Include(p => p.Projects).FirstOrDefaultAsync();
+            return await _context.Users.Where(u => u.Id == id).Include(p => p.Projects).Include(t => t.Tickets).FirstOrDefaultAsync();
         }
 
         public async Task<AppUser> GetUserByIdAsNoTracking(string id)

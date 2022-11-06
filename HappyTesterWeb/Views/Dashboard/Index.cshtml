@@ -3,21 +3,19 @@
 @using HappyTesterWeb.ViewModels
 @inject SignInManager<AppUser> SignInManager
 
-@model DashboardViewModel
+@model List<DashboardViewModel>
 
 
 <section class="section-container">
          <div class="content-wrapper">
-            <div class="content-heading">Projects</div>
+            @*<div class="content-heading">Projects</div>*@
 <div class="row">
 <div class="col-xl">
       <div class="mb-3 d-flex">
          <div>
             <a asp-controller="Project" asp-action="Create" class="btn btn-sm btn-info" type="button">New project</a>
          </div>
-@*         <div>
-            <a asp-controller="UserProject" asp-action="Index" asp-route-projectId="@Model.Id" class="btn btn-sm btn-primary" type="button">Users</a>
-         </div> *@
+
       </div>
       <div class="card b">
          <div class="card-body">
@@ -32,7 +30,7 @@
                      <th></th>
                   </tr>
                </thead>
-               @foreach(var item in Model.Projects)
+               @foreach(var item in Model)
                {         string COLOR = "light";               
                <tbody>
                   <tr>
@@ -55,7 +53,7 @@
                          
                      </td>
                      <td>
-                        @ViewBag.TicketCount
+                        @item.TicketCount
                      </td>
                      <td>
                                 <a asp-controller="project" asp-action="Edit" asp-route-projectId="@item.Id" >

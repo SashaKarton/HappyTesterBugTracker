@@ -45,14 +45,23 @@ namespace HappyTesterWeb.Controllers
             var appUserProjects = await _dashboardRepository.GetAppUserProjects();
             var projectsId = appUserProjects.Select(p => p.ProjectsId).ToList();
             var appUserTickets = await _dashboardRepository.GetAppUserTickets();
-            var tickets = appUserTickets.Select(t => t.TicketsId).ToList();
-            ViewBag.TicketCount = tickets.Count();
+            var tickets = appUserTickets.Select(t => t.TicketsId).ToList();            
             var userProjects = await _dashboardRepository.GetAllUserProjects(projectsId);
-            var dashboardVM = new DashboardViewModel()
+            var result = new List<DashboardViewModel>();
+            foreach(var project in userProjects)
             {
-                Projects = userProjects,
-            };
-            return View(dashboardVM);
+                var dashboardVM = new DashboardViewModel()
+                {
+                    Id = project.Id,
+                    Title = project.Title,
+                    Description = project.Description,
+                    AppUsers = project.AppUsers,
+                    TicketCount = project.Tickets == null ? 0 : project.Tickets.Count()
+                };
+                result.Add(dashboardVM);
+            }
+
+            return View(result);
         }
 
 

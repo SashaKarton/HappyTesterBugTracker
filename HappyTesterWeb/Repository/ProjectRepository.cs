@@ -28,7 +28,7 @@ namespace HappyTesterWeb.Repository
 
         public async Task<IEnumerable<Project>> GetAll()
         {
-            return await _context.Projects.Include(u => u.AppUsers).ToListAsync();
+            return await _context.Projects.Include(u => u.AppUsers).Include(t => t.Tickets).ToListAsync();
         }
 
 

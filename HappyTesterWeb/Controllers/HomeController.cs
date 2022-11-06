@@ -41,9 +41,9 @@ namespace HappyTesterWeb.Controllers
                 var homeVM = new HomeViewModel()
                 {
                     NumberOfProjects = projects.Count(),
-                    NumberOfNewTickets = tickets.Select(x => x.TicketStatus is IssueStatusEnum.New).Count(),
-                    NumberOfReopenedTickets = tickets.Select(x => x.TicketStatus is IssueStatusEnum.Reopened).Count(),
-                    NumberOfResolvedTickets = tickets.Select(x => x.TicketStatus is IssueStatusEnum.Resolved).Count(),                    
+                    NumberOfNewTickets = tickets.Where(x => x.TicketStatus is IssueStatusEnum.New).Count(),
+                    NumberOfReopenedTickets = tickets.Where(x => x.TicketStatus is IssueStatusEnum.Reopened).Count(),
+                    NumberOfResolvedTickets = tickets.Where(x => x.TicketStatus is IssueStatusEnum.Resolved).Count(),                    
 
                 };
                 return View(homeVM);

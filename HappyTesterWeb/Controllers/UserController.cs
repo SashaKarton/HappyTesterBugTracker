@@ -80,6 +80,7 @@ namespace HappyTesterWeb.Controllers
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Projects = user.Projects,
+                Tickets = user.Tickets
 
             };
             return View(userDetailViewModel);
