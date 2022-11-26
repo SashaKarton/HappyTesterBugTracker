@@ -39,21 +39,11 @@ namespace HappyTesterWeb.Repository
             return saved > 0;
         }
 
-        //public bool UpdateRange(IEnumerable<AppUserProject> usersProjects)
-        //{
-        //    _context.UpdateRange(usersProjects);
-        //    return Save();
-        //}
         public bool AddRange(IEnumerable<AppUserProject> usersProjects)
         {
             _context.AddRange(usersProjects);
             return Save();
         }
-        //public bool Update(AppUserProject userProject)
-        //{
-        //    _context.Update(userProject);
-        //    return Save();
-        //}
 
         public async Task<AppUserProject> GetUserProjectByBothIds(int projectId, string userId)
         {

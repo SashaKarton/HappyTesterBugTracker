@@ -12,13 +12,12 @@ namespace HappyTesterWeb.Controllers
     {
         private readonly IProjectRepository _projectRepository;
         private readonly ITicketRepository _ticketRepository;
-        private readonly IUserRepository _userRepository;
+        
 
-        public ProjectController(IProjectRepository projectRepository, ITicketRepository ticketRepository, IUserRepository userRepository)
+        public ProjectController(IProjectRepository projectRepository, ITicketRepository ticketRepository)
         {
             _projectRepository = projectRepository;
-            _ticketRepository = ticketRepository;
-            _userRepository = userRepository;
+            _ticketRepository = ticketRepository;            
         }
 
 
@@ -29,14 +28,6 @@ namespace HappyTesterWeb.Controllers
         {
             IEnumerable<Project> projects = await _projectRepository.GetAll();
 
-            //foreach(var project in projects)
-            //{
-
-            //    var count = project.Tickets == null ? 0: project.Tickets.Count();
-
-            //    ViewBag.TicketCounts = count;               
-
-            //}
             var result = new List<IndexProjectViewModel>();
             foreach(var project in projects)
             {

@@ -4,21 +4,20 @@ using HappyTesterWeb.Models;
 using HappyTesterWeb.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using RunGroopWebApp;
 
 namespace HappyTesterWeb.Repository
 {
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
-        public UserRepository(ApplicationDbContext context)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public UserRepository(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
-        //public bool Add(AppUser user)
-        //{
-        //    _context.Add(user);
-        //    return Save();
-        //}
+
 
         public bool Delete(AppUser user)
         {
@@ -62,17 +61,11 @@ namespace HappyTesterWeb.Repository
             return Save();
         }
 
-        //public void PopulateUserChoises(EditUserProjectViewModel editVM)
-        //{
-        //    editVM.UserChoises = _context.Users.Select(u => new SelectListItem
-        //    {
-        //        Value = u.Id,
-        //        Text = u.UserName
-        //    });
-        //}
-        //public Task<AppUser> GetUserFromList()
-        //{
-        //    return _context.Users.Where(u => u.Id.Contains(u.Id));
-        //}
+        public async Task<AppUser> GetCurUser()
+        {
+            var curUser = _httpContextAccessor.HttpContext?.User.GetUserId();
+            var user = await _context.Users.Where(x => x.Id == curUser).FirstOrDefaultAsync();
+            return user;
+        }
     }
 }

@@ -9,10 +9,8 @@ namespace HappyTesterWeb.Interfaces
         Task<IEnumerable<AppUser>> GetAllUsers();
         Task<IEnumerable<SelectListItem>> GetAllUsersSelectList();
         Task<AppUser> GetUserById(string id);
+        Task<AppUser> GetCurUser();
         Task<AppUser> GetUserByIdAsNoTracking(string id);
-        //void PopulateUserChoises(EditUserProjectViewModel editVM);
-        //Task<AppUser> GetUserFromList();
-        //bool Add(AppUser user);
         bool Update(AppUser user);
         bool Delete(AppUser user);
         bool Save();
