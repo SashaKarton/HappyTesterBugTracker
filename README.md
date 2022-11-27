@@ -12,7 +12,7 @@ Project page with CRUD functionality.
 ![Projects](https://user-images.githubusercontent.com/101929575/204113944-16b1b55d-5aff-4d6d-a898-e7e1c039a409.jpg)
 
 Project creation page. User can create ticket while creating project(ticket will belong to created project).
-![CreateProject](https://user-images.githubusercontent.com/101929575/204113985-916f17ba-d156-4e7f-8bbe-bb63ef47df16.jpg)
+![CreateProject](https://user-images.githubusercontent.com/101929575/204114320-52fd6f6d-e3b2-437a-a6f1-7c9856ac7110.jpg)
 
 Tickets with CRUD
 ![Tickets](https://user-images.githubusercontent.com/101929575/204113991-986d8482-9cd7-48a7-94f2-590a26ab74dd.jpg)
@@ -25,6 +25,7 @@ Users page with CRUD(CRUD is avaliable only for admin role, user role have acces
 
 Users profile page. Where user can edit personal data and photo. Also user can see projects and tickets he assigned to.
 ![Profile](https://user-images.githubusercontent.com/101929575/204114026-2aaf283d-6d35-4714-8b6f-e002a00d037f.jpg)
+
 
 ## Technologies used
 •	ASP.NET Core MVC framework
