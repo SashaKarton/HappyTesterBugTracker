@@ -7,7 +7,7 @@ Project have login and register pages. After registration visitor get user role.
 ![Login](https://user-images.githubusercontent.com/101929575/200970528-0c500125-338c-4e0e-8181-01c42356ed1c.jpg)
 ![Register](https://user-images.githubusercontent.com/101929575/204113895-8a782aff-4ed5-4e22-9899-91246518a04a.jpg)
 
-Next sceenshots was made with admin role.
+Next sceenshots were made with admin role.
 Project page with CRUD functionality.
 ![Projects](https://user-images.githubusercontent.com/101929575/204113944-16b1b55d-5aff-4d6d-a898-e7e1c039a409.jpg)
 
