@@ -17,17 +17,5 @@ namespace HappyTesterWeb.Models
         public IssueStatusEnum TicketStatus { get; set; } = IssueStatusEnum.New;
         public IssueTypeEnum IssueType { get; set; }
         public ICollection<AppUser>? AppUsers { get; set; }
-
-        //public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-
-        //public User? DevAssigned { get; set; }
-        //public User Submitter { get; set; }
-
-        //I need to make comments for tickets
-        //public ICollection<Comment>? TicketComments { get; set; }
-
-        //I want to change create time for update time
-        //public DateTime LastUpdatedDateTime { get; set; } 
-
     }
 }
