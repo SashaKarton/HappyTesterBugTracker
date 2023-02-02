@@ -87,13 +87,6 @@ namespace HappyTesterWeb.Controllers
             }
             _userProjectRepository.AddRange(usersProjects);
 
-            //editVM.UserChoises = await _userRepository.GetAllUsersSelectList();
-            //if (editVM.UserIds != null)
-            //{
-            //    List<SelectListItem> selectedItems = editVM.UserChoises.Where(u => editVM.UserIds.Contains(string.Parse(u.Value))).ToList();
-            //}
-
-            //_userProjectRepository.UpdateRange(usersProjects);
             return RedirectToAction("Index", new { projectId = projectId });
         }
 
