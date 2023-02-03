@@ -13,20 +13,17 @@ namespace HappyTesterWeb.Interfaces
 
         Task<Project> GetProjectByIdAsync(int projectId);
 
-        //Task<Project> GetProjectWithUserByIdAsync(int projectId);
-
-        //Task<Project> GetProjectWithUserByIdNoTracking(int projectId);
-
-
         Task<Project> GetProjectByIdAsNoTracking(int projectId);
-
+        
         (int id, bool success) AddAndGetId(Project project);
+        
         Task<Project> GetProjectWithUsersByIdAsync(int projectId);
-
-        //bool Add(Project project);
+        
         bool Update(Project project);
+        
         bool Delete(Project project);
+        
         bool Save();
-        //bool UpdateUserProject(Project project, IEnumerable<string> model);
+        
     }
 }
